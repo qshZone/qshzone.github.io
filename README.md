@@ -1,2 +1,2 @@
-# qshzone.github.io
-Blog of Pavel.Quash
+# qshZone
+Pavel Quash's Blog on GitHub Pages
