@@ -7,15 +7,12 @@ layout: default
   <ul class="post-list">
     {% for post in site.posts %}
       <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
+        <span class="post-meta">{{ post.date | date: "%-d %B %Y" }}</span>
+        <h1>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
+        </h1>
+		{% if post.description %}<p class="post-description"><em>{{ post.description | newline_to_br }}<a href="{{ post.url }}">Читать →</a></em></p>{% endif %}
       </li>
     {% endfor %}
   </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
 </div>
