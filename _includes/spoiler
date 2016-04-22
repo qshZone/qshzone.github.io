@@ -1,0 +1,4 @@
+<div class="spoiler">
+  <div class="spoiler-title">{{ include.title }}</div>
+  <div class="spoiler-content">{{ include.content }}</div>
+</div>
