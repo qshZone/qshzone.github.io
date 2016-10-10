@@ -1,22 +1,29 @@
 # Site settings
 title: qshZone
-description: > # this means to ignore newlines until "baseurl:"
+description: > # this means to ignore newlines until next parameter
   О мыслях, идеях, опыте и впечатлениях - о жизни.
 timezone: Asia/Yekaterinburg
 
-# Routing
-url: "http://qshzone.ru" # the base hostname & protocol for your site
-baseurl: "" # the subpath of your site, e.g. /blog/
-permalink: /:year/:month/:title # Url post naming
-
-# Build settings
-markdown: kramdown
-highlighter: pygments
-exclude:
-  - j-buildSite.cmd
-  - j-startServer.cmd
-  
 # Author
 author:
   twitter: PavelQuash
   github: PavelQuash
+
+# Routing
+url: "http://qshzone.ru" # can't change on github
+baseurl: "" # the subpath of your site, e.g. /blog/
+permalink: /:year/:month/:title # Url post naming
+
+# Plugins
+gems:
+  - jekyll-sitemap
+
+# Build settings
+markdown: kramdown
+highlighter: Pygments # can't change on github
+exclude:
+  - CNAME
+  - README.md
+  - j-buildSite.cmd
+  - j-startServer.cmd
+  - j-startServerDrafts.cmd  
