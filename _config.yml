@@ -20,7 +20,7 @@ gems:
 
 # Build settings
 markdown: kramdown
-highlighter: Pygments # can't change on github
+highlighter: rouge # can't change on github
 exclude:
   - CNAME
   - README.md
