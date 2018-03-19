@@ -12,3 +12,9 @@ title: Шаблон документа
 ---
 
 Текст
+
+## Разделы
+
+- manual
+- summary/notes
+- travel
