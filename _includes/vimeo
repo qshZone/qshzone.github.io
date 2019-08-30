@@ -1,4 +1,4 @@
-<iframe width="640" height="360"
+<iframe width="420" height="247"
 src="https://player.vimeo.com/video/{{include.id}}"
 frameborder="0"
 allowfullscreen
