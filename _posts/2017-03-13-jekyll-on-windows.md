@@ -2,10 +2,12 @@
 layout: post
 title: Установка Jekyll на Windows 10
 description: |
-        Когда создаешь свой блог на движке Jekyll, то хотя бы одна статья, из числа первых, будет про его настройку. Ведь всегда есть нюансы. Опишу, как сделать это оперативно и какие камни преткновения могут встретиться.
+        Когда создаешь блог на движке Jekyll, то хотя бы одна статья, из числа первых, будет про его настройку — ведь всегда есть нюансы. Опишу, как сделать это оперативно и какие камни преткновения могут встретиться.
 ---
 
-Сегодня мне снова потребовалось переустановить Jekyll. Использую я его в связке с [GitHub Pages](https://pages.github.com/){:target="_blank"}. Смотри как можно быстро с пониманием процесса провести установку и подружиться с версионностью устанавливаемых плагинов на машину с Windows 10 x64.
+![Логотип Jekyll](https://pp.userapi.com/c837728/v837728371/351eb/T-PkeQllOUM.jpg)
+
+Мне снова потребовалось переустановить [Jekyll](https://jekyllrb.com/). Использую я его в связке с [GitHub Pages](https://pages.github.com/). Смотри как можно быстро с пониманием процесса провести установку и подружиться с версионностью устанавливаемых плагинов на машину с `Windows 10 x64 v1903` и ниже.
 
 - [Общая информация](#info)
 - [Шаги по установке Jekyll](#steps)
@@ -28,11 +30,11 @@ Jekyll это gem-модуль Ruby, который устанавливаетс
 <div id="steps"></div>
 ## Шаги по установке Jekyll
 
-Шаг 1. Установи [Ruby](http://rubyinstaller.org/downloads/){:target="_blank"} последней версии в соответствии с разрядностью твоей машины. В стартовом диалоге необходимо отметить флажок `Add Ruby executables to your PATH`
+Шаг 1. Установи [Ruby](http://rubyinstaller.org/downloads/) последней версии в соответствии с разрядностью твоей машины. Появились совмещенные дистрибутивы Ruby+Devkit, поэтому чтобы избежать Шаг 2, воспользуйся им. В стартовом диалоге необходимо отметить флажок `Add Ruby executables to your PATH`.
 
 ![Установка Ruby с PATH](https://pp.userapi.com/c836224/v836224371/28983/Qf8M3wrqbMU.jpg)
 
-Шаг 2. По той же ссылке скачивается и устанавливается [Ruby DevKit](http://rubyinstaller.org/downloads/){:target="_blank"}. И привязывается к инсталляции Ruby командами из консоли Windows.
+Шаг 2. Если ты используешь дистрибутив Ruby без DevKit, то по той же ссылке скачивается и устанавливается [Ruby DevKit](http://rubyinstaller.org/downloads/). И привязывается к инсталляции Ruby командами из консоли Windows.
 
 {% highlight html %}
 cd C:\DirSoft\RubyDevKit
@@ -40,7 +42,7 @@ ruby dk.rb init
 ruby dk.rb install
 {% endhighlight %}
 
-Шаг 3. Далее ставь Jekyll простой командой
+Шаг 3. Далее ставь Jekyll простой командой. Но если есть необходимость в четком совпадении версий с установленным на GitHub, то используй список команд, приведенных ниже и соответствующий раздел.
     {% highlight html %}
 gem install jekyll
     {% endhighlight %}
@@ -57,15 +59,15 @@ gem uninstall <gem name> - удаление модуля gem
 <div id="versions"></div>
 ## Версионность
 
-Для того, чтобы видеть результат таким, каким он будет выглядеть при публикации на GitHub, можно руководствоваться страницей [GitHub Dependency versions](https://pages.github.com/versions/) и установить аналогичные версии на свою локальную машину.
+Для того, чтобы видеть результат таким, каким он будет выглядеть при публикации на GitHub, можно руководствоваться страницей [GitHub Dependency versions](https://pages.github.com/versions/) и установить такие же версии на локальную машину.
 
-Ниже приведен рабочий список версий для установки на Windows 10 x64. В комментарии указано, какую версию допустимо использовать.
+Ниже приведен рабочий список версий для установки на `Windows 10 x64`. В комментарии указано, какую версию допустимо использовать.
 
 | Приложение  | Версия    | Комментарий                  |
 |-------------|-----------|------------------------------|
-| Ruby        | 2.3.3 x64 | последняя                    |
+| Ruby        | 2.6.3 x64 | последняя                    |
 | Ruby Devkit | 4.7.2 x64 | последняя                    |
-| Jekyll      | 3.4.2     | последняя                    |
+| Jekyll      | 3.8.5     | последняя                    |
 |-------------|-----------|------------------------------|
 | Python      | 2.7.12    | только 2.x (можно не ставить)|
 | Pip         | 8.1.1     | последняя (можно не ставить) |
@@ -149,7 +151,7 @@ python -m pip install pygments
 <div id="github-packets"></div>
 ## Пакеты GitHub Pages
 
-Каждый пакет Jekyll выполняет определенный функционал. На начало апреля этого года список пакетов в таблице ниже. Вот [актуальный список](https://pages.github.com/versions/). Прокомментирую интересные.
+Каждый пакет Jekyll отвечает за определенный функционал. На начало апреля этого года список пакетов в таблице ниже. Вот [актуальный список](https://pages.github.com/versions/). Обозначу в таблице заслуживающие внимания.
 
 | Зависимость | Комментарий |
 |-|-|
@@ -166,3 +168,5 @@ python -m pip install pygments
 | liquid | A secure, non-evaling end user template engine with aesthetic markup |
 | rouge	| Rouge aims to a be a simple, easy-to-extend drop-in replacement for pygments |
 | sass | Sass makes CSS fun again. Sass is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. It's translated to well-formatted, standard CSS using the command line tool or a web-framework plugin |
+
+Вот в общем и все, что необходимо знать про начало работы с [Jekyll](https://jekyllrb.com/). Дерзай.
