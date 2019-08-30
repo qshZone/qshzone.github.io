@@ -1,2 +1,2 @@
-start "" http://localhost:4000
+start "qshZone blog" http://localhost:4000 /min
 jekyll s
