@@ -3,6 +3,9 @@ title: qshZone
 description: > # this means to ignore newlines until next parameter
   О мыслях, идеях, опыте и впечатлениях - о жизни.
 timezone: Asia/Yekaterinburg
+analytics:
+  google_analytics: 
+  yandex_metrika: 
 
 # Author
 author:
@@ -15,9 +18,11 @@ author:
 url: "http://qshzone.ru" # can't change on github
 baseurl: "" # the subpath of your site, e.g. /blog/
 permalink: /:year/:month/:title # Url post naming
+sass:
+  style: compressed
 
 # Plugins
-gems:
+plugins:
   - jekyll-sitemap
 
 # Build settings
