@@ -31,7 +31,9 @@ title: Docker справочник
 Формат вызова команды `docker <command>`
 - `build` - сборка образа по файлу `Dockerfile`  
 Пример: `docker build . -t some-app`
-- `images` - список доступных образов в репозитории
+- `images` - список доступных образов в репозитории  
+-q - вывести список идентификаторов образов  
+Пример: `docker rmi $(docker images -q)` - удаление всех образов
 - `search <query>` - поиск в Docker Hub
 - `pull <image name>` - загрузить образ из репозитория
 - `push <image name>` - загрузить образ в репозиторий
@@ -53,7 +55,7 @@ title: Docker справочник
 - `rm <container id or name>` - удаление контейнера по идентификатору или имени
 - `history` - история образа
 - `logs <name>` - логи контейнера, то что пишется в консоль
-- `inspect <container name>` - получение информации по контейнеру: ip, 
+- `inspect <container name>` - получение информации по контейнеру: ip, порты
 
 Полезные команды
 - `docker run --rm -it -p 8080:80 lps-app` - запуск контейнера с приложением, которое будет доступно на порту 8080 и контейнер будет удалён после остановки приложения по `Ctrl+C`
@@ -111,12 +113,18 @@ title: Docker справочник
 ``` yaml
 version: '3'
 
+volumes:
+  mongodb_volume:
+
 services:
   app:
     build: ./app
+	restart: always
   mongo:
     image: mongo
-
+	volumes:
+	  - mongodb_volume:/data/db
+	restart: always
 ```
 
 Здесь
