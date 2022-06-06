@@ -15,7 +15,7 @@ author:
   telegram: qshZone
 
 # Routing
-url: "http://qshzone.ru" # can't change on github
+url: "https://qshzone.ru" # can't change on github
 baseurl: "" # the subpath of your site, e.g. /blog/
 permalink: /:year/:month/:title # Url post naming
 sass:
