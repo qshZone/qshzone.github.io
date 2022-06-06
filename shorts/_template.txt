@@ -1,6 +1,7 @@
 ---
 layout: page
-permalink: /shorts/<address>
+title: <заголовок>
+# permalink: /shorts/page.html #Необязательно, путь прописывается автоматически
 ---
 
 # Заголовок
