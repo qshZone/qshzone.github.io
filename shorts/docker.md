@@ -103,6 +103,31 @@ https://docs.docker.com/engine/reference/builder/
 - `ARG` - указывает переменную, который пользователь может указывать во время `docker build --build-arg user=newuser`, таких инструкций может быть любое количество. Не рекомендуется передавать секреты, так как выполняемые команды сохраняются в `docker history`. Для указания значения по-умолчанию, вместо `ARG user`, можно указать `ARG user=someusert`. Использовать переменные можно через `$user`.
 - `USER` - устанавливает пользователя или группу для инструкций `RUN`, `ENTRYPOINT` и `CMD`.
 
+```
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-content
+
+ARG DOCKER_SERVICE_NAME
+
+COPY Source/$DOCKER_SERVICE_NAME /app-src
+WORKDIR /app-src
+
+RUN dotnet restore --source "https://some-custom-source/repository/nuget/index.json"
+RUN dotnet publish -c Release -o /app-publish
+
+FROM ubuntu:18.04
+
+ARG DOCKER_VAULT_TOKEN
+ARG DOCKER_SERVICE_PORT
+
+EXPOSE $DOCKER_SERVICE_PORT
+
+WORKDIR /app
+
+COPY --chmod=777 --from=build-content /app-publish .
+COPY Docker/temp_appsettings.json appsettings.json
+
+RUN echo "$DOCKER_VAULT_TOKEN" > ~/.vault-token
+```
 
 ## Compose
 
@@ -126,9 +151,18 @@ volumes:
 services:
   app:
     build: ./app
+	  context: ../
+	  dockerfile: ./Docker/dockerfile
+	  args:
+	    DOCKER_VAULT_TOKEN: ${DOCKER_VAULT_TOKEN}
+        DOCKER_SERVICE_NAME: ${DOCKER_SERVICE_NAME}
 	ports:
 	  - "8090:7073"
+	hostname: ${DOCKER_SERVICE_NAME}Docker-${USERNAME}
+	command: app.dll
 	restart: always
+	depends_on:
+      - mongo
   mongo:
     image: mongo
 	volumes:
@@ -142,7 +176,12 @@ services:
 - Оба контейнера будут находиться в единой сети и к ним можно обращаться по именам сервисов `app` и `mongo`, например, в строке подключения
 - В некоторых случаях важен порядок выполнения сервисов, нужно учитывать создающийся кэш
 - `build` - путь пишется относительно `yml` файла, либо указывается абсолютный, до `Dockerfile`
+- `context` - 
 - `volumes` - подключение внешних папок
+- `restart` - 
+- `command` - выполнение команды в дополнение к `ENTRYPOINT`
+- `depends_on` - 
+
 
 
 ## Разное
