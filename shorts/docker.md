@@ -16,7 +16,7 @@ title: Docker справочник
 - `Volume` (том) - файл или каталог, который хранится вне контейнера и подключается к нему	
 - `Dockerfile` - файл описания образа
 - Cлой - выполнение каждой команды в Dockerfile
-- `docker-compose.yml - файл декларативного описания compose, в отличие от императивного подхода, когда выполняешь действия команда за командой
+- `docker-compose.yml` - файл декларативного описания compose, в отличие от императивного подхода, когда выполняешь действия команда за командой
 - `Repository` (репозиторий) - хранилище образов, например [Hub](https://hub.docker.com)
 - `Registry` (реестр)
 
@@ -45,6 +45,7 @@ title: Docker справочник
 --entrypoint bash - при запуске попадаем в командную строку контейнера  
 -u root - указать имя пользователя, в данном случае зайти под рутом и можно будет устанавливать приложения  
 -v - подключение тома в порядке на какой-откуда, пример `-v "/home/foo/app:/data"` или `-v ${PWD}:/data`, где `${PWD}` - это переменная, указывающая на текущую директорию, а папка `data` является папкой внутри контейнера  
+--network host - запуск контейнера локально на машине, не изолированно  
 --name - имя образа, указывается самым последним, если не указать, то генерируется автоматически  
 - `ps` - список запущенных контейнеров  
 -a - список с уже запускавшимися контейнерами
@@ -151,11 +152,12 @@ volumes:
 services:
   app:
     build: ./app
-	  context: ../
-	  dockerfile: ./Docker/dockerfile
-	  args:
-	    DOCKER_VAULT_TOKEN: ${DOCKER_VAULT_TOKEN}
-        DOCKER_SERVICE_NAME: ${DOCKER_SERVICE_NAME}
+	context: ../
+	working_dir: /app
+	dockerfile: ./Docker/dockerfile
+	args:
+	  DOCKER_VAULT_TOKEN: ${DOCKER_VAULT_TOKEN}
+      DOCKER_SERVICE_NAME: ${DOCKER_SERVICE_NAME}
 	ports:
 	  - "8090:7073"
 	hostname: ${DOCKER_SERVICE_NAME}Docker-${USERNAME}
@@ -177,11 +179,14 @@ services:
 - В некоторых случаях важен порядок выполнения сервисов, нужно учитывать создающийся кэш
 - `build` - путь пишется относительно `yml` файла, либо указывается абсолютный, до `Dockerfile`
 - `context` - 
-- `volumes` - подключение внешних папок
+- `working_dir` - рабочая директория для сервиса
+- `volumes` - подключение внешних папок 
 - `restart` - 
 - `command` - выполнение команды в дополнение к `ENTRYPOINT`
 - `depends_on` - 
 
+Команды `docker-compose`
+- `exec <service name> <command>` - выполнение команды, например, `docker-compose exec bash`
 
 
 ## Разное
