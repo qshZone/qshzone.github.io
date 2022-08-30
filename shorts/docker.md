@@ -5,7 +5,14 @@ title: Docker справочник
 
 Полезные ссылки
 - [Docker документация](https://docs.docker.com/)
+- [Docker cheat sheet](https://www.docker.com/wp-content/uploads/2022/03/docker-cheat-sheet.pdf)
 - [Курс для Начинающих](https://youtu.be/_uZQtRyF6Eg) - трёх часовое видео, от базы, до составления `Dockerfile` и использование `docker-compose.yml`
+- [Лучшие практики](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+- [ENTRYPOINT vs CMD](https://habr.com/ru/company/southbridge/blog/329138/)
+- [Multi-stage билды](https://docs.docker.com/develop/develop-images/multistage-build/)
+- [Use bind mounts](https://docs.docker.com/storage/bind-mounts/)
+- [Дополнительные материалы для изучения с МК](https://github.com/goodoldlameme/docker-getting-started)
+
 
 Компоненты
 - `Client` (клиент) - 
@@ -21,6 +28,19 @@ title: Docker справочник
 - `Registry` (реестр)
 
 
+## Программное обеспечение
+
+- [Rancher](https://rancherdesktop.io/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+
+## Образы
+
+Версии образов
+- `latest` - тег по-умолчанию, чаще всего туда публикуют последнюю стабильную версию
+- `alpine` - легковесный образ, без лишнего
+
+
 ## Общие команды
 
 Установка Docker на Linux `curl -sSL https://get.docker.com/ | sh`, `sudo apt install docker`
@@ -31,12 +51,14 @@ title: Docker справочник
 Формат вызова команды `docker <command>`
 - `build` - сборка образа по файлу `Dockerfile`  
 Пример: `docker build . -t some-app`
+- `image` - работа с образами
 - `images` - список доступных образов в репозитории  
 -q - вывести список идентификаторов образов  
 Пример: `docker rmi $(docker images -q)` - удаление всех образов
 - `search <query>` - поиск в Docker Hub
 - `pull <image name>` - загрузить образ из репозитория
-- `push <image name>` - загрузить образ в репозиторий
+- `tag some-local-app:tag login/some-app:tag` - пометить тегом для пуша
+- `push <tag name>` - загрузить образ в репозиторий с указанием тега
 - `run` - запуск контейнера, с параметром  
 --rm - удаляет контейнер после завершения работы  
 -it - интерактивно можно видеть весь вывод на консоль  
@@ -52,31 +74,43 @@ title: Docker справочник
 - `-e` - указание переменной окружения  
 Пример: `-e TZ=Europe/Moscow`
 - `exec` - выполнение команды внутри контейнера  
--it - переход на командную строку внутри контейнера, например, `exec -it <id> /bin/bash`, а для выхода из bash используется `exit`
+-it - переход на командную строку внутри контейнера, например, `exec -it <id> /bin/bash` (или `/bin/sh`), а для выхода из bash используется `exit`
 - `start/stop <container name>` - выполнение/остановка ранее запущенного контейнера
 - `rmi <image id>` - удаление образа
 - `rm <container id or name>` - удаление контейнера по идентификатору или имени
 - `history` - история образа
 - `logs <name>` - логи контейнера, то что пишется в консоль
 - `inspect <container name>` - получение информации по контейнеру: ip, порты
+- `attach <container name>` - подключение к контейнеру
 
 Полезные команды
 - `docker run --rm -it -p 8080:80 lps-app` - запуск контейнера с приложением, которое будет доступно на порту 8080 и контейнер будет удалён после остановки приложения по `Ctrl+C`
 - `docker run -v ${PWD}:/usr/share/nginx/html nginx` - запуск контейнера с nginx и указание внешней папки с index.html
-- `docker build . -t some-app --build-arg <varname>=<value>` - построить образ с указанием переменных
+- `docker build . -t some-app --build-arg <varname>=<value>` - построить образ с указанием тега и переменных
 - `docker exec -it <id> /bin/bash` или `exec -it <id> sh` - запуск интерактивно в оболочке, чтобы работать внутри контейнера
 - `docker run -it --rm --entrypoint bash dotnet/sdk:6.0` - запуск контейнера по определённому образу и сразу перейти к командной строке
 
 - `docker container prune` - очищает список контейнеров, которые не запущены
-- `docker rm $(docker ps -qa)` - передача id всех контейнеров для удаления
 - `docker rm $(docker ps -f status=exited -q)` - удаляет всё завершившие работу контейнеры
+- `docker image prune` - очищает список образов, которые не используются
+- `docker rm $(docker ps -qa)` - передача id всех контейнеров для удаления
+
+- `docker build -t vicerust/core:$(git rev-parse --verify HEAD)` - билд с указанием в теге хэша последнего коммита
 
 
-## Docker volume
+## Тома Volumes
 
-- `docker volume ls`
-- `docker volume create web` - создание тома
-- `docker run ... -v web:/usr/src/app web-hello` - указание тома при методе run
+Команда `docker <command>`
+- `volume ls` - список томов
+- `volume create web` - создание тома, неважно где будет располагаться папка, либо можно указать через двоеточие
+- `run ... -v web:/usr/src/app web-hello` - указание тома при методе run
+- `run --mount source=my-volume,target=/app` - второй вариант через `mount`
+
+
+## Сети Networks
+
+Команда `docker <command>`
+- `network ls`
 
 
 
@@ -90,6 +124,7 @@ https://docs.docker.com/engine/reference/builder/
 
 Команды `Dockerfile`
 - `EXPOSE` - порт, который будет открыт в контейнере
+- `LABEL` - добавляет метаданные для образа, например, информацию об авторе
 - `ENV` - указание переменной окружения  
 Пример: `ENV TZ Europe/Moscow`
 - `FROM` - используемый образ, `latest` - последняя версия, `alpine` - минимальная по объёму версия  
@@ -205,5 +240,5 @@ services:
 
 ### Где хранятся файлы образов на диске?
 
-### Передача параметров в образ/в контейнер
+### Обновление контейнеров
 
