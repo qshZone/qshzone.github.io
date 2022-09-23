@@ -1,24 +1,17 @@
 ---
 layout: post
 title: Установка Jekyll на Windows 10
-description: |
-        Когда создаешь блог на движке Jekyll, то хотя бы одна статья, из числа первых, будет про его настройку — ведь всегда есть нюансы. Опишу, как сделать это оперативно и какие камни преткновения могут встретиться.
+description: Когда создаешь блог на движке Jekyll, то хотя бы одна статья, из числа первых, будет про его настройку — ведь всегда есть нюансы. Опишу, как сделать это оперативно и какие камни преткновения могут встретиться.
 ---
 
 ![Логотип Jekyll](https://pp.userapi.com/c837728/v837728371/351eb/T-PkeQllOUM.jpg)
 
 Мне снова потребовалось переустановить [Jekyll](https://jekyllrb.com/). Использую я его в связке с [GitHub Pages](https://pages.github.com/). Смотри, как можно быстро с пониманием процесса провести установку и подружиться с версионностью устанавливаемых плагинов на машину с Windows 10 и ниже. Устанавливал на версии: `Windows 10 x64 v1903` и `Windows 10 Pro x64 v10.0.19043`.
 
-- [Общая информация](#info)
-- [Шаги по установке Jekyll](#steps)
-- [Версионность](#versions)
-- [Решение проблем](#troubles)
-- [Установка Pygments](#pygments)
-- [Пакеты GitHub Pages](#github-packets)
+<div id="table-of-contents"></div>
 
 
-<div id="info"></div>
-## Общая информация
+## Общая информация {#info}
 
 При установке Jekyll на Windows необходимо поставить набор фреймворков. Корректная работа некоторых из них может зависеть от версии.
 
@@ -27,8 +20,7 @@ Jekyll это gem-модуль Ruby, который устанавливаетс
 В некоторых инструкциях описывается также установка подсветки синтаксиса Pygments. Он тянет за собой Python и его менеджер пакетов Pip. Но имей ввиду, что при публикации на GitHub, используется только Rouge, и устанавливать Pygments в этом случае не имеет смысла. Кроме этого Pygments работает только с Python 2.x и при билде сайта могут возникнуть различные ошибки.
 
 
-<div id="steps"></div>
-## Шаги по установке Jekyll
+## Шаги по установке Jekyll {#steps}
 
 Шаг 1. Установи [Ruby](http://rubyinstaller.org/downloads/) последней версии в соответствии с разрядностью твоей машины. Появились совмещенные дистрибутивы Ruby+Devkit, поэтому чтобы избежать Шаг 2, воспользуйся им. В стартовом диалоге необходимо отметить флажок `Add Ruby executables to your PATH`.
 
@@ -58,8 +50,7 @@ gem uninstall <gem name> - удаление модуля gem
 {% endhighlight %}
 
 
-<div id="versions"></div>
-## Версионность
+## Версионность {#versions}
 
 Для того, чтобы видеть результат таким, каким он будет выглядеть при публикации на GitHub, можно руководствоваться страницей [GitHub Dependency versions](https://pages.github.com/versions/) и установить такие же версии на локальную машину.
 
@@ -80,8 +71,7 @@ gem uninstall <gem name> - удаление модуля gem
 Также есть две полезные ссылки по [установке Jekyll](http://yizeng.me/2013/05/10/setup-jekyll-on-windows/), а также по [списку команд Gem](http://yizeng.me/2013/05/17/quick-rubygems-command-references-for-jekyll/).
 
 
-<div id="troubles"></div>
-## Решение проблем
+## Решение проблем {#troubles}
 
 При установке могут возникнуть некоторые проблемы. Обозначил ту часть проблем, с которыми сталкивался я, но также есть [более обширный список](http://yizeng.me/2013/05/10/setup-jekyll-on-windows/).
 
@@ -124,8 +114,7 @@ gem install jekyll-sitemap --source http://rubygems.org
 Баг был [заведен](https://github.com/Microsoft/BashOnWindows/issues/216) и закрыт. Тем не менее было и [решение](http://stackoverflow.com/questions/39970672/watch-arg-is-unsupported-on-windows), при котором нужно было сделать небольшие правки в исходниках Jekyll. Комментировался участок кода в файле `build.rb` с `if Utils::Platforms.windows?` до `else`.
 
 
-<div id="pygments"></div>
-## Установка Pygments
+## Установка Pygments {#pygments}
 
 Rouge ставится простой командой `gem install rouge`. Для Pygments же необходимо дополнительно установить [Python](https://www.python.org/downloads/). Самой последней является третья версия, но для работы с Jekyll необходимо ставить - вторую.
 
@@ -150,8 +139,8 @@ python -m pip install pygments
 
 В файле конфига Jekyll `_config.yml` остается прописать `highlighter: Pygments` (большие буквы важны). Повторюсь еще раз - в GitHub Pages значение всегда заменяется на Rouge.
 
-<div id="github-packets"></div>
-## Пакеты GitHub Pages
+
+## Пакеты GitHub Pages {#github-packets}
 
 Каждый пакет Jekyll отвечает за определенный функционал. На начало апреля этого года список пакетов в таблице ниже. Вот [актуальный список](https://pages.github.com/versions/). Обозначу в таблице заслуживающие внимания.
 
@@ -171,4 +160,4 @@ python -m pip install pygments
 | rouge	| Rouge aims to a be a simple, easy-to-extend drop-in replacement for pygments |
 | sass | Sass makes CSS fun again. Sass is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. It's translated to well-formatted, standard CSS using the command line tool or a web-framework plugin |
 
-Вот в общем и все, что необходимо знать про начало работы с [Jekyll](https://jekyllrb.com/). Дерзай.
+Это всё, что необходимо знать про начало работы с [Jekyll](https://jekyllrb.com/). Дерзай.
