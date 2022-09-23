@@ -3,9 +3,7 @@
 ---
 @charset "utf-8";
 
-
-
-// Our variables
+// Variables
 $base-font-family: Helvetica, Arial, sans-serif;
 $base-font-size:   16px;
 $small-font-size:  $base-font-size * 0.875;
@@ -43,11 +41,9 @@ $on-laptop:        800px;
 }
 
 
-
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
         "base",
         "layout",
-		"posts",
-        "syntax-highlighting"
-;
+        "posts",
+        "syntax-highlighting";
