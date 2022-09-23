@@ -1,7 +1,6 @@
 # Site settings
 title: qshZone
-description: > # this means to ignore newlines until next parameter
-  О мыслях, идеях, опыте и впечатлениях - о жизни.
+description: О мыслях, идеях, опыте и впечатлениях - о жизни.
 timezone: Asia/Yekaterinburg
 analytics:
   google_analytics: 
@@ -12,7 +11,8 @@ author:
   twitter: PavelQuash
   github: PavelQuash
   instagram: PavelQuash
-  telegram: qshZone
+  telegram: pavelquash
+  telegram-channel: qshZone
 
 # Routing
 url: "https://qshzone.ru" # can't change on github
