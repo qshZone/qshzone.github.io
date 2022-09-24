@@ -83,6 +83,7 @@ title: Docker справочник
 - `rm <container id or name>` - удаление контейнера по идентификатору или имени
 - `history` - история образа
 - `logs <name>` - логи контейнера, то что пишется в консоль
+- `container logs -f <container id>` - в динамике следить за консолью контейнера
 - `inspect <container name>` - получение информации по контейнеру: ip, порты
 - `attach <container name>` - подключение к контейнеру
 - `update --restart unless-stopped qshZone` - обновляет параметры уже созданного контейнера
