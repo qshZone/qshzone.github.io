@@ -8,7 +8,8 @@ description: Когда создаешь блог на движке Jekyll, то
 
 Мне снова потребовалось переустановить [Jekyll](https://jekyllrb.com/). Использую я его в связке с [GitHub Pages](https://pages.github.com/). Смотри, как можно быстро с пониманием процесса провести установку и подружиться с версионностью устанавливаемых плагинов на машину с Windows 10 и ниже. Устанавливал на версии: `Windows 10 x64 v1903` и `Windows 10 Pro x64 v10.0.19043`.
 
-<div id="table-of-contents"></div>
+- Содержание
+{:toc}
 
 
 ## Общая информация {#info}
@@ -75,7 +76,7 @@ gem uninstall <gem name> - удаление модуля gem
 
 При установке могут возникнуть некоторые проблемы. Обозначил ту часть проблем, с которыми сталкивался я, но также есть [более обширный список](http://yizeng.me/2013/05/10/setup-jekyll-on-windows/).
 
-### Сертификат и соединение https
+### Сертификат и соединение https {#cert-https}
 
 Не получается найти валидный gem для установки Jekyll.
 
@@ -97,7 +98,7 @@ Message: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: c
 gem install jekyll-sitemap --source http://rubygems.org
 {% endhighlight %}
 
-### BOM символы в yaml заголовке документа
+### BOM символы в yaml заголовке документа {#bom-symbols}
 
 В заголовке UTF-8 документа не должно быть BOM символов, иначе заголовок представляется как текст и вся верстка съезжает. YAML разметка в этом случае парсером не распознается.
 
@@ -105,7 +106,7 @@ gem install jekyll-sitemap --source http://rubygems.org
 
 ![Notepad++ ковертация в UTF-8 (без BOM)](https://pp.userapi.com/c836224/v836224371/2898a/72TEhYI5334.jpg)
 
-### Регенерация по \-\-watch
+### Регенерация по \-\-watch {#regeneration}
 
 Проблема проявлялась с регенерацией / ребилдом более новой версии Jekyll 3.3.0. В более старой Jekyll 3.2.1 это работало.
 
