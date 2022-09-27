@@ -25,10 +25,16 @@ sass:
 # Plugins
 plugins:
   - jekyll-sitemap
+  - jemoji
 
 # Build settings
-markdown: kramdown
-highlighter: rouge # can't change on github
+kramdown:
+#  toc_levels: 2
+#  math_engine: mathjax # can't change on github
+#  syntax_highlighter: rouge # can't change on github
+# highlighter: rouge # can't change on github
+minima:
+  skin: dark
 exclude:
   - CNAME
   - README.md
