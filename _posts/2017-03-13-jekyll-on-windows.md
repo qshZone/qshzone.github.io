@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Установка Jekyll на Windows 10
+title: Установка Jekyll на Windows
 description: Когда создаешь блог на движке Jekyll, то хотя бы одна статья, из числа первых, будет про его настройку — ведь всегда есть нюансы. Опишу, как сделать это оперативно и какие камни преткновения могут встретиться.
 ---
 
 ![Логотип Jekyll](https://pp.userapi.com/c837728/v837728371/351eb/T-PkeQllOUM.jpg)
 
-Мне снова потребовалось переустановить [Jekyll](https://jekyllrb.com/). Использую я его в связке с [GitHub Pages](https://pages.github.com/). Смотри, как можно быстро с пониманием процесса провести установку и подружиться с версионностью устанавливаемых плагинов на машину с Windows 10 и ниже. Устанавливал на версии: `Windows 10 x64 v1903` и `Windows 10 Pro x64 v10.0.19043`.
+Мне снова потребовалось переустановить [Jekyll](https://jekyllrb.com/). Использую я его в связке с [GitHub Pages](https://pages.github.com/). Смотри, как можно быстро с пониманием процесса провести установку и подружиться с версионностью устанавливаемых плагинов на машину с Windows 10 и выше. Устанавливал на версии: `Windows 10 x64 v1903`, `Windows 10 Pro x64 v10.0.19043` и `Windows 10 Pro x64 v19044.2075`.
 
 - Содержание
 {:toc}
@@ -160,5 +160,7 @@ python -m pip install pygments
 | liquid | A secure, non-evaling end user template engine with aesthetic markup |
 | rouge	| Rouge aims to a be a simple, easy-to-extend drop-in replacement for pygments |
 | sass | Sass makes CSS fun again. Sass is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. It's translated to well-formatted, standard CSS using the command line tool or a web-framework plugin |
+
+Таже все специфические моменты по связке GitHub + Jekyll отражены в [документе](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#configuring-jekyll-in-your-github-pages-site).
 
 Это всё, что необходимо знать про начало работы с [Jekyll](https://jekyllrb.com/). Дерзай.
