@@ -33,8 +33,6 @@ kramdown:
 #  math_engine: mathjax # can't change on github
 #  syntax_highlighter: rouge # can't change on github
 # highlighter: rouge # can't change on github
-minima:
-  skin: dark
 exclude:
   - CNAME
   - README.md

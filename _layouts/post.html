@@ -9,11 +9,12 @@ layout: default
       {{ page.date | date: "%d.%m.%Y" }}
       {% if page.date-updated %} • обновлено {{ page.date-updated | date: "%d.%m.%Y" }}{% endif %}
     </p>
-    {% if page.author or page.meta %}
-    <p class="post-meta">
-      {% if page.author %} • автор {{ page.author }}{% endif %}
-      {% if page.meta %} • {{ page.meta }}{% endif %}
-    </p>
+    
+	{% assign metaEntities = "" | split: "," %}
+	{% assign metaEntities = metaEntities | push: page.author %}
+	{% assign metaEntities = metaEntities | push: page.meta %}
+	{% if metaEntities.size > 0 %}
+      <p class="post-meta">{{ metaEntities | compact | join: " • " }}</p>
     {% endif %}
   </header>
 
