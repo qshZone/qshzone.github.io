@@ -19,7 +19,10 @@ layout: default
   </header>
 
   <article class="post-content">
-    {% if page.description %}<p><em>{{ page.description | newline_to_br }}</em></p>{% endif %}
+    {% if page.description %}<p>{{ page.description | newline_to_br }}</p>{% endif %}
+	
+    <hr />
+	
     {{ content }}
   </article>
 
