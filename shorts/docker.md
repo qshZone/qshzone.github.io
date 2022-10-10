@@ -94,7 +94,7 @@ title: Docker справочник
 - `docker run -v ${PWD}:/usr/share/nginx/html nginx` - запуск контейнера с nginx и указание внешней папки с index.html
 - `docker build . -t some-app --build-arg <varname>=<value>` - построить образ с указанием тега и переменных
 - `docker exec -it <id/name> /bin/bash` или `exec -it <id> sh` - запуск интерактивно в оболочке, чтобы работать внутри контейнера
-- `docker run -it --rm --entrypoint bash dotnet/sdk:6.0` - запуск контейнера по определённому образу и сразу перейти к командной строке
+- `docker run -it --rm --entrypoint <shell> dotnet/sdk:6.0` - запуск контейнера по определённому образу и сразу перейти к командной строке, `shell` может быть `bash` или `sh`
 
 - `docker container prune` - очищает список контейнеров, которые не запущены
 - `docker rm $(docker ps -f status=exited -q)` - удаляет всё завершившие работу контейнеры
@@ -115,9 +115,14 @@ title: Docker справочник
 
 ## Сети Networks
 
-Команда `docker <command>`
-- `network ls`
+По-умолчанию Docker создаёт несколько сетей
+- `none` - только локальная сеть в контейнере
+- `host` - без виртуализации, сеть локальной машины, как если бы приложение было запущено вне контейнера
+- `bridge` - режим моста
 
+Команда `docker network <command>`
+- `ls` - вывести список сетей
+- `inspect <network name>` - получить информацию о сети и какие контейнеры в неё входят
 
 
 ## Dockerfile - сборка образа
