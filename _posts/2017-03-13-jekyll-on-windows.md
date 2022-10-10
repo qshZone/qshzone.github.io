@@ -143,7 +143,7 @@ python -m pip install pygments
 
 ## Пакеты GitHub Pages {#github-packets}
 
-Каждый пакет Jekyll отвечает за определенный функционал. На начало апреля этого года список пакетов в таблице ниже. Вот [актуальный список](https://pages.github.com/versions/). Обозначу в таблице заслуживающие внимания.
+Каждый пакет Jekyll отвечает за определенный функционал. На начало апреля этого года список пакетов в таблице ниже. Вот [актуальный список][github-packets]. Обозначу в таблице заслуживающие внимания.
 
 | Зависимость | Комментарий |
 |-|-|
@@ -161,6 +161,13 @@ python -m pip install pygments
 | rouge	| Rouge aims to a be a simple, easy-to-extend drop-in replacement for pygments |
 | sass | Sass makes CSS fun again. Sass is an extension of CSS, adding nested rules, variables, mixins, selector inheritance, and more. It's translated to well-formatted, standard CSS using the command line tool or a web-framework plugin |
 
-Таже все специфические моменты по связке GitHub + Jekyll отражены в [документе](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#configuring-jekyll-in-your-github-pages-site).
 
-Это всё, что необходимо знать про начало работы с [Jekyll](https://jekyllrb.com/). Дерзай.
+## Полезные ссылки {#links}
+
+> - [Документация Jekyll](https://jekyllrb.com/docs/)
+> - [Все специфические моменты по связке GitHub + Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll#configuring-jekyll-in-your-github-pages-site).
+> - [Актуальный список версий пакетов на GitHub Pages][github-packets]
+
+[github-packets]: https://pages.github.com/versions/
+
+Это всё, что необходимо знать про начало работы с `Jekyll`. Дерзай.
