@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Docker сервер на Raspberry Pi
-description: Долгое время хотел структурировать знания по администрированию Linux, работе с Docker и захостить простые задачи на Raspberry Pi. Мой личный опыт в настройке простого и функционального сервера.
+description: Долгое время хотел структурировать знания по администрированию Linux, работе с Docker и захостить простые задачи на Raspberry Pi. Мой личный опыт в настройке небольшого и функционального сервера.
 date-updated: 2022-10-10
 ---
 
@@ -31,26 +31,55 @@ date-updated: 2022-10-10
 
 Далее устанавливается поэтапно нижеперечисленное ПО. Докер служит для контейнеризации, изоляции и оркестрации контейнеров.
 
-
 ### Docker
 
-Для `Ubuntu` нужно воспользоваться [хорошей статьёй на Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-ru).
+Для `Ubuntu` нужно воспользоваться [статьёй на Docker](https://docs.docker.com/engine/install/ubuntu/) и уже устаревшей [статьёй на Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04-ru).
+
+Кратко
+- `sudo apt update`
+- `sudo apt-get install ca-certificates curl gnupg lsb-release`
+- `sudo mkdir -p /etc/apt/keyrings`
+- `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg`
+- `echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`
+- `sudo apt update`
+- `apt-cache policy docker-ce` - если находится кандидат, то репозиторий установлен корректно
+- `sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin`
+
+***
 
 Docker устанавливается для `Raspberri Pi OS` командой  
 `sudo curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh`
 
+***
 
 Чтобы убедиться, что докер работает, вызываем `docker -v`, будет выведена версия установленного ПО.
+
 Но для скачивания образа нужно будет каждый раз вызывать `sudo`. Для ввода команд без `sudo`, добавляем группу docker и добавляем в неё текущего пользователя.
 
-- `sudo groupadd docker` - если группа не существует, как правило она уже создана после установки скрипта
-- `sudo gpasswd -a $USER docker`
+- `sudo gpasswd -a $USER docker` - добавление текущего пользователя в группу `docker`
 - `newgrp docker` - после этого получится подключаться к Docker daemon
 
 Для некоторых контейнеров нужно создавать `volumes`, я создаю в `/opt/service-name` папки `container-name`.
 
 Для каждого контейнера задаётся имя, restart policy, порт, том, образ. Командную строку я привожу для каждого контейнера. А изоляции по сети я не делаю.
 
+### Organizr
+
+Основная точка входа. Инструмент, который часто используется, когда всё сервисы настроены, он будет на `80` порту.
+
+[Сайт](https://organizr.app/)
+
+```
+docker run --name organizr -d --restart always \
+           -p 80:80 \
+           -p 443:443 \
+           -v /opt/qshZone/other/organizr:/config \
+           organizr/organizr
+```
+
+Настройка
+- Название БД: `SomeDb`
+- Расположение БД: `/config/db`
 
 ### Portainer
 
@@ -59,7 +88,7 @@ Docker устанавливается для `Raspberri Pi OS` командой
 ```
 docker run --name portainer -d \
            -p 8080:9443 --restart always \
-           -v /opt/qshZone/portainer-data:/data \
+           -v /opt/qshZone/other/portainer:/data \
            -v /var/run/docker.sock:/var/run/docker.sock \
            portainer/portainer-ce
 ```
@@ -73,35 +102,11 @@ docker run --name portainer -d \
 ```
 docker run --name watchtower -d --restart always \
            -v /var/run/docker.sock:/var/run/docker.sock \
-           lcontainrrr/watchtower`
+           containrrr/watchtower
 ```
 
-### Organizr
 
-Основная точка входа. Инструмент, который часто используется, когда всё сервисы настроены, он будет на `80` порту.
-
-[Сайт](https://organizr.app/)
-
-```
-docker run --name organizr -d --restart always \
-           -p 80:80 \
-           -p 443:443 \
-           -v /opt/qshZone/organizr-data:/config \
-           organizr/organizr
-```
-
-Настройка
-- Название БД: `SomeDb`
-- Расположение БД: `/config/db`
-
-### Dynamic DNS
-
-Иногда нет возможности получить «белый» статический ip-адрес, динамический ip-адрес можно привязать к доменному имени бесплатно.
-
-- Noip `coppit/no-ip` This is a simple Docker container for running the No-IP2 dynamic DNS update script. It will keep your domain.ddns.net DNS alias up-to-date as your home IP changes.
-- [DuckDNS](https://www.duckdns.org/) Получение динамического адреса
-
-## Программное обеспечение
+## Полезное ПО
 
 ### PiHole
 
@@ -111,29 +116,15 @@ docker run --name organizr -d --restart always \
 pihole/pihole
 ```
 
-### Smart Home
+### Dynamic DNS
 
-Наиболее попопулярные решения на сегодняшний день `Home Assistant`, `OpenHab2` и `Majordomo`.
+Иногда нет возможности получить «белый» статический ip-адрес, динамический ip-адрес можно привязать к доменному имени бесплатно.
 
-Mosquitto - можно установить в виде аддона в hass.io, так он будет попадать в бекап
-Установить анонимное подключение или пользователем, включить прослушиваемый порт
-Приложение по отправке сообщений неплохое под разные системы https://mqttx.app/
-Docs https://www.hivemq.com/mqtt-essentials/
-Приложение под iOS, чтобы рисовать графики
-```
-docker run --name mqtt -d --restart always \
-           -p 1883:1883 \
-           -p 9001:9001 \
-           -v /opt/qshZone/mosquitto/config:/mosquitto/config \
-           -v /opt/qshZone/mosquitto/data:/mosquitto/data \
-           -v /opt/qshZone/mosquitto/log:/mosquitto/log \
-           eclipse-mosquitto
-```
-
-OpenHab2 https://www.openhab.org/ openhab/openhab
+- Noip `coppit/no-ip` This is a simple Docker container for running the No-IP2 dynamic DNS update script. It will keep your domain.ddns.net DNS alias up-to-date as your home IP changes.
+- [DuckDNS](https://www.duckdns.org/) Получение динамического адреса
 
 
-## Media
+## Медиа
 
 - FreshRss - `freshrss/freshrss` [Demo](https://demo.freshrss.org/)
 
@@ -142,6 +133,11 @@ OpenHab2 https://www.openhab.org/ openhab/openhab
 - jackett (indexer для поиска в торрентах)
 - bazarr (закачивает сабы для видео)
 - sonar (библиотека сериалов, передает в Transmission закачку)
+- Мониторинг `radarr`
+- Jellyfin
+- Deluge
+- PhotoPrism
+
 
 #### Transmission
 
@@ -187,7 +183,7 @@ shairport-sync https://discourse.osmc.tv/t/airplay-audio-server/20294
 - podcasts.google.com
 
 
-## NAS Servers
+## NAS
 
 ### OpenMediaVault
 
@@ -205,7 +201,6 @@ https://www.openmediavault.org/ ikogan/openmediavault
 - RabbitMQ - rabbitmq
 - InfluxDb - influxdb
 - Телеграф - telegraf, is an agent for collecting metrics and writing them to InfluxDB or other outputs.
-- Мониторинг `radarr`
 
 ### VPN
 
@@ -215,10 +210,35 @@ https://www.openmediavault.org/ ikogan/openmediavault
 
 ### Mongo
 ```
---restart always
-docker run --name mongo -d \
+docker run --name mongo -d --restart always \
            -p 27017:27017 \
            -v /opt/qshZone/mongo/db:/data/db \
 		   -v /opt/qshZone/mongo/config:/data/configdb \
            andresvidal/rpi3-mongodb3
 ```
+
+
+## Домашняя автоматизация
+
+### MQTT
+
+Mosquitto - можно установить в виде аддона в hass.io, так он будет попадать в бекап
+Установить анонимное подключение или пользователем, включить прослушиваемый порт
+Приложение по отправке сообщений неплохое под разные системы https://mqttx.app/
+Docs https://www.hivemq.com/mqtt-essentials/
+Приложение под iOS, чтобы рисовать графики
+```
+docker run --name mqtt -d --restart always \
+           -p 1883:1883 \
+           -p 9001:9001 \
+           -v /opt/qshZone/mosquitto/config:/mosquitto/config \
+           -v /opt/qshZone/mosquitto/data:/mosquitto/data \
+           -v /opt/qshZone/mosquitto/log:/mosquitto/log \
+           eclipse-mosquitto
+```
+
+### Smart Home
+
+Наиболее попопулярные решения на сегодняшний день `Home Assistant`, `OpenHab2` и `Majordomo`.
+
+OpenHab2 https://www.openhab.org/ openhab/openhab
