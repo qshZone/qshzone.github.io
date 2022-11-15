@@ -40,10 +40,17 @@ title: Docker справочник
 - `latest` - тег по-умолчанию, чаще всего туда публикуют последнюю стабильную версию
 - `alpine` - легковесный образ, без лишнего
 
+Команды `docker <command>`
+- `docker save -o <path for generated tar file> <image name>` - сохранить образ в файл без использования репозитория, пример: `docker save -o c:/myfile.tar centos:16`
+- `docker load -i <path to image tar file>` - загрузить образ
+
 
 ## Общие команды
 
 Установка Docker на Linux `curl -sSL https://get.docker.com/ | sh`, `sudo apt install docker`
+
+`docker buildx ls` - для каких платформ можно делать билд
+`docker save <image-name> > <file-name.tar>` - сохранение контейнера в файл
 
 
 ## Основные команды
@@ -119,6 +126,8 @@ title: Docker справочник
 - `none` - только локальная сеть в контейнере
 - `host` - без виртуализации, сеть локальной машины, как если бы приложение было запущено вне контейнера
 - `bridge` - режим моста
+- допольнительно `macvlan`
+- допольнительно `ipvlan`
 
 Команда `docker network <command>`
 - `ls` - вывести список сетей
