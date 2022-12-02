@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Docker сервер на Raspberry Pi
-description: Долгое время хотел структурировать знания по администрированию Linux, работе с Docker и захостить простые задачи на Raspberry Pi. Мой личный опыт в настройке небольшого и функционального сервера.
-date-updated: 2022-10-10
+description: Долгое время у меня копился этот материал, в нём я структурировал знания по администрированию Linux и работе с Docker. Хотел захостить простые задачи на Raspberry Pi. Мой личный опыт в настройке небольшого и функционального сервера.
+date-updated: 2022-12-02
 ---
 
-С февраля 2020 года я активно знакомился с одноплатниками, приложениями Linux, многообразием протоколов, с помощью которых смогу реализовать взаимодействие устройств, а в августе 2022 года плотно занялся Docker. Я уже делал одну попытку настройки связки `Docker + Raspberry Pi`, но тогда не хватило знаний и опыта. Теперь кратко опишу этапы настройки такого сервера на `Raspberry Pi 3`.
+С февраля 2020 года я активно знакомился с одноплатниками, приложениями Linux, многообразием протоколов, с помощью которых смогу реализовать взаимодействие устройств, а в августе 2022 года плотно занялся Docker. Я уже делал одну попытку настройки связки `Docker + Raspberry Pi`, но тогда не хватило опыта и времени. Теперь кратко опишу этапы настройки такого сервера на `Raspberry Pi 3`.
 
 - Содержание
 {:toc}
@@ -86,8 +86,8 @@ docker run --name organizr -d --restart always \
 [Сайт](https://www.portainer.io/)
 
 ```
-docker run --name portainer -d \
-           -p 8080:9443 --restart always \
+docker run --name portainer -d --restart always \
+           -p 8080:9443 \
            -v /opt/qshZone/other/portainer:/data \
            -v /var/run/docker.sock:/var/run/docker.sock \
            portainer/portainer-ce
@@ -105,12 +105,23 @@ docker run --name watchtower -d --restart always \
            containrrr/watchtower
 ```
 
+### Логирование syslog
+
+Логи syslog принимает, например, от Mikrotik, от Linux.
+- `GrayLog` - хороший инструмент, умеет реагировать на приходящие записи. Он работает в связке с `Elastic Search` и `Mongo` - а это уже очень тяжёлая связка для `RPi`.
+- `syslog-ng` - тоже неплохой и распространённый инструмент
+
+```
+```
 
 ## Полезное ПО
 
+```
+```
+
 ### PiHole
 
-Блокировка рекламы на уровне DNS, что-то типа AdBlock, но не для отдельного устройства, а для всей сети.
+Блокировка рекламы на уровне DNS, что-то типа AdBlock, но не для отдельного устройства, а для всей сети. Если есть роутер Mikrotik, то логичнее всего запускать контейнер прямо на роутере, а не на отдельном сервере.
 
 ```
 pihole/pihole
@@ -209,12 +220,41 @@ https://www.openmediavault.org/ ikogan/openmediavault
 - Аруба cloud норм хостер в италии $3.5-5 за 2гб оперы и несколько терабайт трафика, за $1-2 можно самую дешевую виртуалку взять
 
 ### Mongo
+
+Начиная с Mongo 5 нужна архитектура arm64/v8.2+, а у RPi 3 архитектура arm64/v8 - этого не достаточно для 5 версии. Поэтому нужно использовать версию 4+, тем более она (будет поддерживаться)[https://www.mongodb.com/support-policy/lifecycles] до февраля 2024 года.
+
 ```
 docker run --name mongo -d --restart always \
            -p 27017:27017 \
-           -v /opt/qshZone/mongo/db:/data/db \
-		   -v /opt/qshZone/mongo/config:/data/configdb \
-           andresvidal/rpi3-mongodb3
+           -e MONGO_INITDB_DATABASE=qshZone \
+           -e MONGO_INITDB_ROOT_USERNAME=quash \
+           -e MONGO_INITDB_ROOT_PASSWORD=my-secret-pw \
+           -v /opt/qshZone/soft/mongo/db:/data/db \
+           -v /opt/qshZone/soft/mongo/config:/data/configdb \
+           mongo:4.4.18
+```
+
+### MariaDb
+
+```
+docker run --name mariadb -d --restart always \
+           -p 8081:80 \
+           -p 3306:3306 \
+           -e MARIADB_ROOT_PASSWORD=my-secret-pw \
+           -v /opt/qshZone/soft/mariadb/db:/var/lib/mysql \
+           -v /opt/qshZone/soft/mariadb/mysqld:/var/run/mysqld \
+           -v /opt/qshZone/soft/mariadb/config:/etc/mysql/conf.d \
+           mariadb
+```
+
+### InfluxDb
+
+```
+docker run --name influxdb -d --restart always \
+           -p 8086:8086 \
+           -v /opt/qshZone/soft/influxdb:/var/lib/influxdb \
+           -v /opt/qshZone/soft/influxdb/conf:/etc/influxdb \
+           influxdb:1.8
 ```
 
 
@@ -231,10 +271,19 @@ Docs https://www.hivemq.com/mqtt-essentials/
 docker run --name mqtt -d --restart always \
            -p 1883:1883 \
            -p 9001:9001 \
-           -v /opt/qshZone/mosquitto/config:/mosquitto/config \
-           -v /opt/qshZone/mosquitto/data:/mosquitto/data \
-           -v /opt/qshZone/mosquitto/log:/mosquitto/log \
+           -v /opt/qshZone/soft/mosquitto/config:/mosquitto/config \
+           -v /opt/qshZone/soft/mosquitto/data:/mosquitto/data \
+           -v /opt/qshZone/soft/mosquitto/log:/mosquitto/log \
            eclipse-mosquitto
+```
+
+### Node Red
+
+```
+docker run --name nodered -d --restart always \
+           -p 1880:1880 \
+           -v /opt/qshZone/soft/nodered:/data \
+           nodered/node-red
 ```
 
 ### Smart Home
