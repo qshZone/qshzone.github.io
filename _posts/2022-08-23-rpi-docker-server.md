@@ -110,6 +110,8 @@ docker run --name watchtower -d --restart always \
 Логи syslog принимает, например, от Mikrotik, от Linux.
 - `GrayLog` - хороший инструмент, умеет реагировать на приходящие записи. Он работает в связке с `Elastic Search` и `Mongo` - а это уже очень тяжёлая связка для `RPi`.
 - `syslog-ng` - тоже неплохой и распространённый инструмент
+- `balabit/syslog-ng` - ??? syslog можно завязать микротик
+
 
 ```
 ```
@@ -236,6 +238,8 @@ docker run --name mongo -d --restart always \
 
 ### MariaDb
 
+Самый популярный форк `MySQL`, который был основан 
+
 ```
 docker run --name mariadb -d --restart always \
            -p 8081:80 \
@@ -278,6 +282,8 @@ docker run --name mqtt -d --restart always \
 ```
 
 ### Node Red
+
+Довольно тяжёлая штука
 
 ```
 docker run --name nodered -d --restart always \
