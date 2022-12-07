@@ -1,0 +1,43 @@
+---
+layout: minimal
+---
+
+<style>
+    .center-message {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        overflow: auto;
+    }
+</style>
+
+<div class="center-message">🌐 Переадресация…</div>
+
+<script type="text/javascript">
+    let redirectLink = "/404";
+
+    if (window.location.hash != '')
+    {
+        // Список ссылок по алиасам и поиск
+        let links = {
+{% for category in site.data.links %}
+    {% for link in category.links %}"{{ link.alias | downcase }}": "{{ link.href }}",{% endfor %}
+{% endfor %}        
+        };
+
+        let hashParams = window.location.hash.substring(1).split('@');
+
+        let alias = hashParams[0].toLowerCase();
+        let params = hashParams.length > 1 ? hashParams[1] : '';
+        
+        redirectLink = links[alias].replaceAll('%s', params);
+    }
+       
+    window.location.replace(redirectLink);
+ </script>

@@ -1,0 +1,25 @@
+---
+
+- category: Демки
+  links:
+  - alias: google
+    href: https://www.google.ru/search?q=%s
+    desc: В параметр `href` можно добавлять `%s`, тогда в него будет добавляться всё, что находится после символа `#`. Например, `qshzone.ru/go#google@find something`.
+  - alias: qr-link
+    href: https://chart.googleapis.com/chart?cht=qr&chs=180x180&choe=UTF-8&chld=L|2&chl=%s
+    desc: Генерация QR-кода для указанного в параметре url. 
+
+- category: Проекты
+  links:
+  - alias: coc
+    href: https://codeofclimber.ru/
+    desc: Проект Code Of Climber от Hal
+
+- category: Генерация
+  links:
+  - alias: wificonnect
+    href: https://www.qr-code-generator.com/solutions/wifi-qr-code/
+    desc: Генерация QR-кода для подключения к Wi-Fi сети, SVG формат
+  - alias: qr
+    href: https://www.qr-code-generator.com/solutions/wifi-qr-code/
+    desc: Генерация QR-кода для ссылки
