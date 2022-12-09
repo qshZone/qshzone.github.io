@@ -49,15 +49,23 @@ title: Docker справочник
 
 Установка Docker на Linux `curl -sSL https://get.docker.com/ | sh`, `sudo apt install docker`
 
-`docker buildx ls` - для каких платформ можно делать билд
-`docker save <image-name> > <file-name.tar>` - сохранение контейнера в файл
+`docker <command>`
+- `save <image-name> > <file-name.tar>` - сохранение контейнера в файл
+- `stats` - статистика в реальном времени по использованию ресурсов контейнерами
 
 
 ## Основные команды
 
+Билды
 Формат вызова команды `docker <command>`
 - `build` - сборка образа по файлу `Dockerfile`  
 Пример: `docker build . -t some-app`
+ - `buildx install` - установка `buildx`
+ - `buildx ls` - для каких платформ можно делать билд
+ 
+
+  
+Формат вызова команды `docker <command>`
 - `image` - работа с образами
 - `images` - список доступных образов в репозитории  
 -q - вывести список идентификаторов образов  

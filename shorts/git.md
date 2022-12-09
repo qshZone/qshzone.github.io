@@ -69,7 +69,6 @@ title: Git справочник
 - Для игнора бинарных данных необходимо скачать .gitignore для Visual Studio с glob-шаблонами
 - git push origin <name> - опубликовать на удаленный сервер уже существующую ветку
 - git push origin :<name> - удаление ветки или git push origin --delete <name>
-- git branch -d <name> - удаление ветки, параметр -D форсит
 - git fetch <репозиторий> - получение данных из удаленных проектов без мерджа
 - git pull origin develop - получить новые изменения себе из хранилища и смержить их
 - git push origin -u <new-name> - перепривязать текущую ветку к новой удалённой ветке
@@ -80,8 +79,8 @@ title: Git справочник
 - git branch -vv более подробная информация, например, можно увидеть какие ветки трекаются
 - git branch <name> - создать ветку
 - git branch <name> <hash> - создать ветку, указывающую на хэш коммита
-- git branch -d <name> - удалить указанную ветку
-- git branch -m <oldname> <newname> - переименование ветки
+- git branch -d <name> - удалить указанную ветку, параметр -D форсит
+- git branch -m <oldname> <newname> - переименование ветки из любой ветки
 - git branch -m <newname> - переименование текущей ветки
 - git push origin :old-name new-name - переименовать удаленную ветку и запушить в новую ветку
 - git checkout -b <name> - создать ветку и сразу перейти на нее, 2 команды: git branch <name>; git checkout <name>
