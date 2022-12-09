@@ -8,12 +8,12 @@ analytics:
 
 # Author
 author:
-  twitter: PavelQuash
-  github: PavelQuash
-  instagram: PavelQuash
-  telegram: PavelQuash
+#  telegram: PavelQuash
   telegram-channel: qshZone
-  email: hi@qshzone.ru
+  github: PavelQuash
+#  instagram: PavelQuash
+#  twitter: PavelQuash
+#  email: hi@qshzone.ru
 
 # Routing
 url: "https://qshzone.ru" # can't change on github

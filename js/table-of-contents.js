@@ -1,7 +1,9 @@
-/* Формирование оглавления страницы по заголовкам */
-/* Для формирования на странице необходим элемент с id='table-of-contents' */
+// Формирование оглавления страницы по заголовкам
 
-function generateTableOfContents() {
+// Для формирования на странице необходим элемент с id='table-of-contents'
+// В Jekyll имеется встроенная возможность формирования командой {:toc}
+
+(function generateTableOfContents() {
 	var toc = document.getElementById("table-of-contents");
 	if (toc == null) return;
 	
@@ -25,4 +27,4 @@ function generateTableOfContents() {
       tocList.appendChild(tocListItem);
     }
     toc.appendChild(tocList);
-}
+}());
