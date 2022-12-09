@@ -179,8 +179,7 @@ NextCloud - nextcloud, хранилище файлов, типа dropbox
 
 ### IP webcamera
 
-Onvif Service
-https://www.instructables.com/How-to-turn-an-USB-camera-with-Raspberry-Pi-into-a/
+[Onvif Service](https://www.instructables.com/How-to-turn-an-USB-camera-with-Raspberry-Pi-into-a/)
 
 
 ### shairport-sync AirPlay streaming
@@ -223,7 +222,7 @@ https://www.openmediavault.org/ ikogan/openmediavault
 
 ### Mongo
 
-Начиная с Mongo 5 нужна архитектура arm64/v8.2+, а у RPi 3 архитектура arm64/v8 - этого не достаточно для 5 версии. Поэтому нужно использовать версию 4+, тем более она (будет поддерживаться)[https://www.mongodb.com/support-policy/lifecycles] до февраля 2024 года.
+Начиная с Mongo 5 нужна архитектура arm64/v8.2+, а у RPi 3 архитектура arm64/v8 - этого не достаточно для 5 версии. Поэтому нужно использовать версию 4+, тем более она [будет поддерживаться](https://www.mongodb.com/support-policy/lifecycles) до февраля 2024 года.
 
 ```
 docker run --name mongo -d --restart always \

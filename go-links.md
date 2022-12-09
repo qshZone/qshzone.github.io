@@ -5,7 +5,7 @@ layout: default
 - Содержание
 {:toc}
 
-{% assign urlBase = site.url + site.baseurl %}
+{% assign urlBase = site.url | append: site.baseurl %}
 {% for category in site.data.links %}
 
 ## {{category.category}}
