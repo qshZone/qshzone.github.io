@@ -105,6 +105,7 @@ title: Docker справочник
 
 
 Полезные команды
+- `docker run --rm telegraf telegraf config > telegraf.conf` - извлечение файла конфигурации из контейнера, так как он будет перетерт, если будут использоваться volumes
 - `docker run --rm -it -p 8080:80 lps-app` - запуск контейнера с приложением, которое будет доступно на порту 8080 и контейнер будет удалён после остановки приложения по `Ctrl+C`
 - `docker run -v ${PWD}:/usr/share/nginx/html nginx` - запуск контейнера с nginx и указание внешней папки с index.html
 - `docker build . -t some-app --build-arg <varname>=<value>` - построить образ с указанием тега и переменных

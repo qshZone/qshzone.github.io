@@ -102,19 +102,10 @@ docker run --name portainer -d --restart always \
 ```
 docker run --name watchtower -d --restart always \
            -v /var/run/docker.sock:/var/run/docker.sock \
-           containrrr/watchtower
+           containrrr/watchtower \
+           --interval 86400
 ```
 
-### Логирование syslog
-
-Логи syslog принимает, например, от Mikrotik, от Linux.
-- `GrayLog` - хороший инструмент, умеет реагировать на приходящие записи. Он работает в связке с `Elastic Search` и `Mongo` - а это уже очень тяжёлая связка для `RPi`.
-- `syslog-ng` - тоже неплохой и распространённый инструмент
-- `balabit/syslog-ng` - ??? syslog можно завязать микротик
-
-
-```
-```
 
 ## Полезное ПО
 
@@ -135,6 +126,31 @@ pihole/pihole
 
 - Noip `coppit/no-ip` This is a simple Docker container for running the No-IP2 dynamic DNS update script. It will keep your domain.ddns.net DNS alias up-to-date as your home IP changes.
 - [DuckDNS](https://www.duckdns.org/) Получение динамического адреса
+
+### Логирование syslog
+
+Логи syslog принимает, например, от Mikrotik, от Linux.
+
+- `GrayLog` - хороший инструмент, умеет реагировать на приходящие записи. Он работает в связке с `Elastic Search` и `Mongo` - а это уже очень тяжёлая связка для `RPi`.
+- `syslog-ng` - тоже неплохой и распространённый инструмент
+- `balabit/syslog-ng` - ??? syslog можно завязать микротик
+
+```
+```
+
+
+## Мониторинг состояния
+
+### Telegraf
+
+Для запуска Телеграф необходим запущенный контейнер `influxdb` (запускаю его в разделе БД).
+
+```
+docker run --name telegraf -d --restart always \
+       -v /opt/qshZone/soft/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+       --net=container:influxdb \
+       telegraf
+```
 
 
 ## Медиа
@@ -172,17 +188,15 @@ linuxserver/plex
 
 ### TvHeadend
 
-### NextCloud
-
-Образ `nextcloud`
-NextCloud - nextcloud, хранилище файлов, типа dropbox
 
 ### IP webcamera
 
 [Onvif Service](https://www.instructables.com/How-to-turn-an-USB-camera-with-Raspberry-Pi-into-a/)
 
 
-### shairport-sync AirPlay streaming
+### AirPlay streaming
+
+shairport-sync
 
 https://hub.docker.com/r/kevineye/shairport-sync
 shairport-sync https://discourse.osmc.tv/t/airplay-audio-server/20294
@@ -197,11 +211,9 @@ shairport-sync https://discourse.osmc.tv/t/airplay-audio-server/20294
 
 ## NAS
 
-### OpenMediaVault
-
-https://www.openmediavault.org/ ikogan/openmediavault
-
-### FreeNAS
+- [OpenMediaVault](https://www.openmediavault.org) - `ikogan/openmediavault`
+- FreeNAS
+- NextCloud - nextcloud, хранилище файлов, типа dropbox, `nextcloud`
 
 
 ## Разное
@@ -211,7 +223,6 @@ https://www.openmediavault.org/ ikogan/openmediavault
 - Grafana - grafana/grafana
 - PostgreSQL - postgres
 - RabbitMQ - rabbitmq
-- InfluxDb - influxdb
 - Телеграф - telegraf, is an agent for collecting metrics and writing them to InfluxDB or other outputs.
 
 ### VPN
@@ -220,9 +231,12 @@ https://www.openmediavault.org/ ikogan/openmediavault
 - VPN digitalocean.com
 - Аруба cloud норм хостер в италии $3.5-5 за 2гб оперы и несколько терабайт трафика, за $1-2 можно самую дешевую виртуалку взять
 
+
+## Базы данных
+
 ### Mongo
 
-Начиная с Mongo 5 нужна архитектура arm64/v8.2+, а у RPi 3 архитектура arm64/v8 - этого не достаточно для 5 версии. Поэтому нужно использовать версию 4+, тем более она [будет поддерживаться](https://www.mongodb.com/support-policy/lifecycles) до февраля 2024 года.
+Начиная с Mongo 5 нужна архитектура arm64/v8.2+, у RPi 3 архитектура arm64/v8 - этого не достаточно для 5 версии. Поэтому нужно использовать версию 4+, тем более она [будет поддерживаться](https://www.mongodb.com/support-policy/lifecycles) до февраля 2024 года.
 
 ```
 docker run --name mongo -d --restart always \
@@ -230,21 +244,22 @@ docker run --name mongo -d --restart always \
            -e MONGO_INITDB_DATABASE=qshZone \
            -e MONGO_INITDB_ROOT_USERNAME=quash \
            -e MONGO_INITDB_ROOT_PASSWORD=my-secret-pw \
-           -v /opt/qshZone/soft/mongo/db:/data/db \
-           -v /opt/qshZone/soft/mongo/config:/data/configdb \
+           -v /mnt/hdd/mongodb:/data/db \
+           -v /opt/qshZone/soft/mongodb:/data/configdb \
            mongo:4.4.18
 ```
 
 ### MariaDb
 
-Самый популярный форк `MySQL`, который был основан 
+Самый популярный форк `MySQL`, который был основан основателями MySQL.
+
+Для установки пароля рута нужен параметр `-e MARIADB_ROOT_PASSWORD=my-secret-pw`.
 
 ```
 docker run --name mariadb -d --restart always \
            -p 8081:80 \
            -p 3306:3306 \
-           -e MARIADB_ROOT_PASSWORD=my-secret-pw \
-           -v /opt/qshZone/soft/mariadb/db:/var/lib/mysql \
+           -v /mnt/hdd/mariadb:/var/lib/mysql \
            -v /opt/qshZone/soft/mariadb/mysqld:/var/run/mysqld \
            -v /opt/qshZone/soft/mariadb/config:/etc/mysql/conf.d \
            mariadb
@@ -255,8 +270,8 @@ docker run --name mariadb -d --restart always \
 ```
 docker run --name influxdb -d --restart always \
            -p 8086:8086 \
-           -v /opt/qshZone/soft/influxdb:/var/lib/influxdb \
-           -v /opt/qshZone/soft/influxdb/conf:/etc/influxdb \
+           -v /mnt/hdd/influxdb:/var/lib/influxdb \
+           -v /opt/qshZone/soft/influxdb:/etc/influxdb \
            influxdb:1.8
 ```
 
@@ -282,7 +297,7 @@ docker run --name mqtt -d --restart always \
 
 ### Node Red
 
-Довольно тяжёлая штука
+Довольно тяжёлая штука, позволяет работать с mqtt, получать сообщения и реагировать на них. Имеет удобный графический интерфейс.
 
 ```
 docker run --name nodered -d --restart always \
@@ -293,6 +308,10 @@ docker run --name nodered -d --restart always \
 
 ### Smart Home
 
-Наиболее попопулярные решения на сегодняшний день `Home Assistant`, `OpenHab2` и `Majordomo`.
+Наиболее попопулярные решения на сегодняшний день
 
-OpenHab2 https://www.openhab.org/ openhab/openhab
+- `Home Assistant`
+- [`OpenHab 3`](https://www.openhab.org/) - `openhab/openhab`
+- `Majordomo`
+- `Domoticz`
+- `GladysAssistant`
