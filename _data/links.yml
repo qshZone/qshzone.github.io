@@ -11,6 +11,9 @@
 
 - category: Проекты
   links:
+  - alias: qshtube
+    href: https://www.youtube.com/channel/UCZk4D9_cGHCVLI1Dd59GAZQ
+    desc: Канал qshZone на YouTube
   - alias: coc
     href: https://codeofclimber.ru/
     desc: Проект Code Of Climber от Hal
