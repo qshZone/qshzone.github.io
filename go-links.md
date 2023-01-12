@@ -15,7 +15,7 @@ layout: default
 {% assign alias = link.alias | downcase %}
 {% assign urlAlias = urlBase | append: "/go#" | append: alias %}
 {% assign urlRaw = link.href %}
-- [{{ alias }}]({{ urlAlias }}){:title="{{ urlRaw }}"} - {{ link.desc }}
+- `#`[{{ alias }}]({{ urlAlias }}){:title="{{ urlRaw }}"} - {{ link.desc }}
 {% endfor %}
 
 {% endfor %}
