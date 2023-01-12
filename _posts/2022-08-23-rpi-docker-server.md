@@ -253,7 +253,7 @@ docker run --name mongo -d --restart always \
 
 Самый популярный форк `MySQL`, который был основан основателями MySQL.
 
-Для установки пароля рута нужен параметр `-e MARIADB_ROOT_PASSWORD=my-secret-pw`.
+Для установки пароля рута, при первом запуске нужен параметр `-e MARIADB_ROOT_PASSWORD=my-secret-pw`.
 
 ```
 docker run --name mariadb -d --restart always \
