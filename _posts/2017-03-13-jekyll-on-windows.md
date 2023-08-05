@@ -27,7 +27,7 @@ Jekyll это gem-модуль Ruby, который устанавливаетс
 
 ![Установка Ruby с PATH](https://pp.userapi.com/c836224/v836224371/28983/Qf8M3wrqbMU.jpg)
 
-Шаг 2. Если ты используешь дистрибутив Ruby без DevKit, то по той же ссылке скачивается и устанавливается [Ruby DevKit](http://rubyinstaller.org/downloads/). И привязывается к инсталляции Ruby командами из консоли Windows.
+Шаг 2. Не обязательный шаг. Если ты используешь дистрибутив Ruby без DevKit, то по той же ссылке скачивается и устанавливается [Ruby DevKit](http://rubyinstaller.org/downloads/). И привязывается к инсталляции Ruby командами из консоли Windows.
 
 {% highlight html %}
 cd C:\DirSoft\RubyDevKit
@@ -61,7 +61,7 @@ gem uninstall <gem name> - удаление модуля gem
 |-------------|-------------|------------------------------|
 | Ruby        | 3.1.0-1 x64 | последняя                    |
 | Ruby Devkit | 3.1.0-1 x64 | последняя                    |
-| Jekyll      | 3.8.5       | последняя                    |
+| Jekyll      | 4.3.2       | последняя                    |
 |-------------|-------------|------------------------------|
 | Python      | 2.7.12      | только 2.x (можно не ставить)|
 | Pip         | 8.1.1       | последняя (можно не ставить) |
@@ -70,49 +70,6 @@ gem uninstall <gem name> - удаление модуля gem
 Инструкции по настройке Jekyll на Windows с необходимыми ссылками есть также на [официальном сайте](https://jekyllrb.com/docs/windows/). Неплохой инструкцией ранее считалась [Run Jekyll on Windows](http://jekyll-windows.juthilo.com/).
 
 Также есть две полезные ссылки по [установке Jekyll](http://yizeng.me/2013/05/10/setup-jekyll-on-windows/), а также по [списку команд Gem](http://yizeng.me/2013/05/17/quick-rubygems-command-references-for-jekyll/).
-
-
-## Решение проблем {#troubles}
-
-При установке могут возникнуть некоторые проблемы. Обозначил ту часть проблем, с которыми сталкивался я, но также есть [более обширный список](http://yizeng.me/2013/05/10/setup-jekyll-on-windows/).
-
-### Сертификат и соединение https {#cert-https}
-
-Не получается найти валидный gem для установки Jekyll.
-
-{% highlight html %}
-gem install jekyll -v 2.5.1
-ERROR:  Could not find a valid gem 'jekyll' (= 2.5.1), here is why:
-          Unable to download data from https://rubygems.org/ - SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed (
-https://rubygems.org/specs.4.8.gz)
-c:\...\Ruby200-x64\lib\ruby\2.0.0\rubygems\ssl_certs\
-Message: SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed
-{% endhighlight %}
-
-Необходим pem-файл. Можно ознакомиться, что происходит [под капотом](https://gist.github.com/luislavena/f064211759ee0f806c88).  
-Проблема возникала на Windows 8.1, на Windows 10 этого не требовалось.
-
-Обходится, если указать источник http.
-
-{% highlight html %}
-gem install jekyll-sitemap --source http://rubygems.org
-{% endhighlight %}
-
-### BOM символы в yaml заголовке документа {#bom-symbols}
-
-В заголовке UTF-8 документа не должно быть BOM символов, иначе заголовок представляется как текст и вся верстка съезжает. YAML разметка в этом случае парсером не распознается.
-
-Правится изменением кодировки в UTF-8 без BOM. В Notepad++ для этого есть специальный пункт меню.
-
-![Notepad++ ковертация в UTF-8 (без BOM)](https://pp.userapi.com/c836224/v836224371/2898a/72TEhYI5334.jpg)
-
-### Регенерация по \-\-watch {#regeneration}
-
-Проблема проявлялась с регенерацией / ребилдом более новой версии Jekyll 3.3.0. В более старой Jekyll 3.2.1 это работало.
-
-![watch аргумент не поддерживается на Windows](https://pp.userapi.com/c626617/v626617371/31e33/XxZ2n9ffPtw.jpg)
-
-Баг был [заведен](https://github.com/Microsoft/BashOnWindows/issues/216) и закрыт. Тем не менее было и [решение](http://stackoverflow.com/questions/39970672/watch-arg-is-unsupported-on-windows), при котором нужно было сделать небольшие правки в исходниках Jekyll. Комментировался участок кода в файле `build.rb` с `if Utils::Platforms.windows?` до `else`.
 
 
 ## Установка Pygments {#pygments}
