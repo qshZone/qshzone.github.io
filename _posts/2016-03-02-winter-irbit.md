@@ -2,7 +2,7 @@
 layout: post
 title: Ирбит - мотоциклетная столица России
 description: Ирбит небольшой город, но для Урала он имеет историческое значение.
-date-updated: 2022-09-20
+date-updated: 2022-10-21
 author: <a href='https://instagram.com/nastasya.bogart'>Анастасия Богатырёва</a>
 ---
 
