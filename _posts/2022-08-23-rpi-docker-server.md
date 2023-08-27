@@ -131,7 +131,7 @@ pihole/pihole
 
 Логи syslog принимает, например, от Mikrotik, от Linux.
 
-- `GrayLog` - хороший инструмент, умеет реагировать на приходящие записи. Он работает в связке с `Elastic Search` и `Mongo` - а это уже очень тяжёлая связка для `RPi`.
+- `GrayLog` - хороший инструмент, умеет реагировать на приходящие записи. Он работает в связке с `Elastic Search` и `Mongo` - это очень тяжёлая связка для `RPi`.
 - `syslog-ng` - тоже неплохой и распространённый инструмент
 - `balabit/syslog-ng` - ??? syslog можно завязать микротик
 
@@ -236,7 +236,7 @@ shairport-sync https://discourse.osmc.tv/t/airplay-audio-server/20294
 
 ### Mongo
 
-Начиная с Mongo 5 нужна архитектура arm64/v8.2+, у RPi 3 архитектура arm64/v8 - этого не достаточно для 5 версии. Поэтому нужно использовать версию 4+, тем более она [будет поддерживаться](https://www.mongodb.com/support-policy/lifecycles) до февраля 2024 года.
+Начиная с Mongo 5 нужна архитектура arm64/v8.2+, у RPi 3 архитектура arm64/v8 - этого не достаточно для 5 версии. Поэтому нужно использовать версию 4+, она [будет поддерживаться](https://www.mongodb.com/support-policy/lifecycles) до февраля 2024 года.
 
 ```
 docker run --name mongo -d --restart always \
@@ -246,7 +246,7 @@ docker run --name mongo -d --restart always \
            -e MONGO_INITDB_ROOT_PASSWORD=my-secret-pw \
            -v /mnt/hdd/mongodb:/data/db \
            -v /opt/qshZone/soft/mongodb:/data/configdb \
-           mongo:4.4.18
+           mongo:4.4.24
 ```
 
 ### MariaDb
