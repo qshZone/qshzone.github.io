@@ -8,7 +8,9 @@ layout: default
 {% for game in site.data.games %}
 
 ## {{game.title}}
-{{game.year}}
+
+{{ game.year }}
+
 {% for date in game.dates %}
 
 {{date.description}}
