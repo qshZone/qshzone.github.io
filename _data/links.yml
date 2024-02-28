@@ -1,6 +1,15 @@
 ---
 
-- category: Демки
+- category: qshZone Youtube
+  links:
+  - alias: qshtube
+    href: https://www.youtube.com/channel/UCZk4D9_cGHCVLI1Dd59GAZQ
+    desc: Канал qshZone на YouTube. Второй вариант - это ссылка https://www.youtube.com/@qshZone66
+  - alias: parusaurala-lectures
+    href: https://www.youtube.com/playlist?list=PLB7sfwgTep0FJDFK97pqednkK_cq6I1CV
+    desc: Канал qshZone на YouTube. Второй вариант - это ссылка https://www.youtube.com/@qshZone66
+
+- category: Инструменты
   links:
   - alias: google
     href: https://www.google.ru/search?q=%s
@@ -8,18 +17,6 @@
   - alias: qr-link
     href: https://chart.googleapis.com/chart?cht=qr&chs=180x180&choe=UTF-8&chld=L|2&chl=%s
     desc: Генерация QR-кода для указанного в параметре url. 
-
-- category: Проекты
-  links:
-  - alias: qshtube
-    href: https://www.youtube.com/channel/UCZk4D9_cGHCVLI1Dd59GAZQ
-    desc: Канал qshZone на YouTube. Второй вариант - это ссылка https://www.youtube.com/@qshZone66
-  - alias: coc
-    href: https://codeofclimber.ru/
-    desc: Проект Code Of Climber от Hal
-
-- category: Генерация
-  links:
   - alias: wificonnect
     href: https://www.qr-code-generator.com/solutions/wifi-qr-code/
     desc: Генерация QR-кода для подключения к Wi-Fi сети, SVG формат
@@ -32,3 +29,9 @@
   - alias: ra
     href: https://youtu.be/dQw4w9WgXcQ
     desc: Rick Astley - Never Gonna Give You Up (Official Music Video)
+
+- category: Разное
+  links:
+  - alias: coc
+    href: https://codeofclimber.ru/
+    desc: Проект Code Of Climber от Hal
